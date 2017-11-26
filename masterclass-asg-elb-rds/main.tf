@@ -37,10 +37,8 @@ data "aws_ami" "amazon_linux" {
 module "autoscaling" {
   source = "terraform-aws-modules/autoscaling/aws"
 
-  # Launch configuration
-  #
-  # Uncomment the value below and provide value of existing launch configuration to use it instead of making new one
-  # existing_launch_configuration = "aa"
+  key_name = "batiyevsky-keypair"
+
   lc_name = "example-lc"
 
   image_id          = "${data.aws_ami.amazon_linux.id}"
