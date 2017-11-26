@@ -1,5 +1,5 @@
 ######
-# Launch configuration and autoscaling group
+# Launch configuration
 ######
 module "autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
@@ -34,6 +34,10 @@ module "autoscaling" {
     },
   ]
 
+  ######
+  # Autoscaling group 
+  ######
+
   asg_name                  = "example-asg"
   vpc_zone_identifier       = ["${data.aws_subnet_ids.all.ids}"]
   health_check_type         = "ELB"
@@ -41,7 +45,6 @@ module "autoscaling" {
   max_size                  = 1
   desired_capacity          = 1
   wait_for_capacity_timeout = 0
-
   tags = [
     {
       key                 = "Environment"
