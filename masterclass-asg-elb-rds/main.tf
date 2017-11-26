@@ -35,9 +35,13 @@ data "aws_ami" "amazon_linux" {
 # Launch configuration and autoscaling group
 ######
 module "autoscaling" {
-  source = "terraform-aws-modules/autoscaling/aws"
+  source  = "terraform-aws-modules/autoscaling/aws"
+  version = "1.2.0"
 
-  key_name = "batiyevsky-keypair"
+  key_name                  = "batiyevsky-keypair"
+  user_data                 = "${data.template_file.user_data.rendered}"
+  health_check_grace_period = 120
+  min_elb_capacity          = 1
 
   lc_name = "example-lc"
 
@@ -63,10 +67,9 @@ module "autoscaling" {
     },
   ]
 
-  # Auto scaling group
   asg_name                  = "example-asg"
   vpc_zone_identifier       = ["${data.aws_subnet_ids.all.ids}"]
-  health_check_type         = "EC2"
+  health_check_type         = "ELB"
   min_size                  = 0
   max_size                  = 1
   desired_capacity          = 1
@@ -109,7 +112,7 @@ module "elb" {
 
   health_check = [
     {
-      target              = "HTTP:80/"
+      target              = "HTTP:3000/"
       interval            = 30
       healthy_threshold   = 2
       unhealthy_threshold = 2
