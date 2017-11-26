@@ -54,14 +54,14 @@ module "autoscaling" {
     {
       device_name           = "/dev/xvdz"
       volume_type           = "gp2"
-      volume_size           = "10"
+      volume_size           = "8"
       delete_on_termination = true
     },
   ]
 
   root_block_device = [
     {
-      volume_size = "1"
+      volume_size = "8"
       volume_type = "gp2"
     },
   ]
