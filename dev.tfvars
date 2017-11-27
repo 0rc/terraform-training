@@ -1,0 +1,8 @@
+env_name = "dev"
+app_version = "0.1"
+instance_type = "t2.nano"
+asg_min_size = "1"
+asg_max_size = "1"
+db_user = "testuser"
+db_pass = "mystrongPass!"
+db_name = "testdb"
